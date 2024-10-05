@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Message from "./Message";
 import {
   collection,
@@ -12,8 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setEmails } from "../redux/appSlice";
 import store from "../redux/store";
 function Messages() {
+  const { searchText, emails } = useSelector((store) => store.app);
+  const [tempEmails, setTempEmails] = useState(emails);
   const dispatch = useDispatch();
-  const { emails } = useSelector((store) => store.app);
 
   useEffect(() => {
     const q = query(collection(db, "emails"), orderBy("createdAt", "desc"));
@@ -27,8 +28,17 @@ function Messages() {
     return () => unsubscribe();
   }, []);
 
+  useEffect(()=>{
+const filteredEmail=emails?.filter((email)=>{
+    return email.subject.toLowerCase().includes(searchText.toLowerCase()) || email.to.toLowerCase().includes(searchText.toLowerCase()) || email.message.toLowerCase().includes(searchText.toLowerCase())
+
+})
+    setTempEmails(filteredEmail);
+
+  },[searchText,emails])
+ 
   return (
-    <div>{emails && emails?.map((email) => <Message email={email} />)}</div>
+    <div>{tempEmails && tempEmails?.map((email) => <Message email={email} />)}</div>
   );
 }
 

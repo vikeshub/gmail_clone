@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosSearch } from "react-icons/io";
 import { CiCircleQuestion } from "react-icons/ci";
 import { CiSettings } from "react-icons/ci";
 import { PiDotsNineBold } from "react-icons/pi";
 import Avatar from "react-avatar";
+import { useDispatch } from "react-redux";
+import { setSearchText } from "../../redux/appSlice";
 
 function Navbar() {
+  const [input, setInput] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setSearchText(input));
+  }, [input]);
+  
   return (
     <div className="flex items-center justify-between mx-3 h-16">
       <div className="flex items-center gap-10">
@@ -26,6 +35,8 @@ function Navbar() {
         <div className="flex items-center bg-[#EAF1FB] px-2 py-3 rounded-full">
           <IoIosSearch size={"24px"} className="text-gray-700" />
           <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
             type="text"
             placeholder="Search Mail"
             className="rounded-full w-full bg-transparent outline-none px-1"
@@ -44,7 +55,10 @@ function Navbar() {
             <PiDotsNineBold size={"20px"} />
           </div>
           <div className=" cursor-pointer">
-            <Avatar src="https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png"  size="30px"/>
+            <Avatar
+              src="https://static-00.iconduck.com/assets.00/profile-circle-icon-2048x2048-cqe5466q.png"
+              size="30px"
+            />
           </div>
         </div>
       </div>
