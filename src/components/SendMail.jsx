@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpen } from "../redux/appSlice";
 
 function SendMail() {
-    const { open } = useSelector(store => store.app);
+  const { open } = useSelector((store) => store.app);
   const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    to: "",
+    subject: "",
+    message: "",
+  });
+
+  const changedHandler = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
 
   return (
     <div
@@ -22,14 +35,26 @@ function SendMail() {
           <RxCross2 size={"20px"} />
         </div>
       </div>
-      <form action="" className="flex flex-col p-3 gap-2">
-        <input type="text" placeholder="To" className="outline-none py-1" />
+      <form onSubmit={submitHandler} className="flex flex-col p-3 gap-2">
         <input
+          onChange={changedHandler}
+          value={formData.to}
+          name="to"
+          type="text"
+          placeholder="To"
+          className="outline-none py-1"
+        />
+        <input
+          onChange={changedHandler}
+          value={formData.subject}
+          name="subject"
           type="text"
           placeholder="Subject"
           className="outline-none py-1"
         />
         <textarea
+          onChange={changedHandler}
+          value={formData.message}
           name="message"
           cols="30"
           rows="10"
