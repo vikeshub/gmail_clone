@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { LuPencil } from "react-icons/lu";
 import { IoMdStar } from "react-icons/io";
 import { MdOutlineWatchLater, MdKeyboardArrowDown } from "react-icons/md";
 import { TbSend2 } from "react-icons/tb";
+import { useDispatch } from 'react-redux';
+import { setOpen } from '../redux/appSlice';
 
 const SidebarItems = [
   {
@@ -28,10 +30,11 @@ const SidebarItems = [
 ];
 
 function Sidebar() {
+  const dispatch = useDispatch();
   return (
     <div className="w-[15%] bg-white h-full shadow-md">
       <div className="p-3">
-        <button className="flex items-center gap-2 p-4 rounded-2xl hover:shadow-md bg-[#C2E7FF]">
+        <button onClick={() => dispatch(setOpen(true))} className="flex items-center gap-2 p-4 rounded-2xl hover:shadow-md bg-[#C2E7FF]">
           <LuPencil size={"24px"} />
           Compose
         </button>
