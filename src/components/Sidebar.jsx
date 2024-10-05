@@ -39,10 +39,7 @@ function Sidebar() {
       <div className="text-gray-500">
         {SidebarItems.map((item, index) => {
           return (
-            <div
-              key={index} // Added key prop
-              className="flex items-center gap-4 pl-6 py-2 rounded-r-full hover:cursor-pointer hover:bg-gray-200 my-2"
-            >
+            <div key={index} className="flex items-center gap-4 pl-6 py-2 rounded-r-full hover:cursor-pointer hover:bg-gray-200 my-2">
               {item.icon}
               <p>{item.text}</p>
             </div>
